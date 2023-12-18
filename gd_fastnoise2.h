@@ -1,0 +1,5 @@
+#ifndef GODOT_FASTNOISE2_H
+#define GODOT_FASTNOISE2_H
+
+
+#endif
