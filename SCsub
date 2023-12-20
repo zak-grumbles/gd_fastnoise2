@@ -2,12 +2,18 @@
 
 Import("env")
 
-_generate_fastnoise2_proj()
-_build_fastnoise2_lib()
-
 env_gdfastnoise2 = env.Clone()
-env_gdfastnoise2.add_source_files(env.modules_sources, '*.cpp')
 
-env_gdfastnoise2.Prepend(CPPATH=[".", "./FastNoise2/include/FastNoise", "./FastNoise2/include/FastSIMD"])
-env.Append(LIBPATH=['FastNoise2/build/src'])
-env.Append(LIBS=['FastNoise'])
+# FastNoise source files
+fastnoise2_dir = "./FastNoise2/include/"
+env_gdfastnoise2.Prepend(CPPPATH=[fastnoise2_dir])
+
+# GD Source files
+gdfastnoise2_obj = []
+
+env_gdfastnoise2.add_source_files(gdfastnoise2_obj, "*.cpp")
+env.modules_sources += gdfastnoise2_obj
+
+env_gdfastnoise2.Append(LIBPATH=["./FastNoise2/build/src/Release/"])
+env_gdfastnoise2.Append(LIBS=['FastNoise'])
+env_gdfastnoise2["LIBSUFFIXES"] = ""

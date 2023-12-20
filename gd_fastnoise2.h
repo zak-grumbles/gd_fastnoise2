@@ -1,9 +1,11 @@
 #include <core/object/ref_counted.h>
 
-#include "./FastNoise2/include/FastNoise/FastNoise.h"
+#include <modules/GDFastNoise2/FastNoise2/include/FastNoise/FastNoise.h>
+
+namespace _FastNoise = FastNoise;
 
 class FNSimplex : public RefCounted {
-    GDCLASS(FNSimplex, RefCounted);
+    GDCLASS(FNSimplex, RefCounted)
 
 public:
     FNSimplex();
@@ -13,6 +15,6 @@ protected:
     static void _bind_methods();
 
 private:
-    FastNoise::SmartNode<FastNoise::Simplex> _node;
-}
+	_FastNoise::SmartNode<_FastNoise::Simplex> _node;
+};
 
