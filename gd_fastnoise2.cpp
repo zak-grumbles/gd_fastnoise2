@@ -1,9 +1,7 @@
-#include "gd_fastnoise2_simplex.h"
-
-#include <FastNoise2/include/FastNoise/FastNoise.h>
+#include "gd_fastnoise2.h"
 
 FNSimplex::FNSimplex() {
-    _node = _FastNoise::New<_FastNoise::Simplex>();
+    _node = FastNoise::New<FastNoise::Simplex>();
 }
 
 void FNSimplex::_bind_methods() {

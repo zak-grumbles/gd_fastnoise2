@@ -1,32 +1,13 @@
-import subprocess
+#!/usr/bin/env python
 
-Import('env')
-
-def _generate_fastnoise2_proj():
-    cmd = [
-        'cmake', '-S', './FastNoise2',
-        '-B', './FastNoise2/build',
-        '-D', 'FASTNOISE2_NOISETOOL=OFF',
-        '-D', 'FASTNOISE2_TESTS=OFF',
-        '-D', 'BUILD_SHARED_LIBS=ON'
-        '-G', '\"Unix Makefiles\"'
-        ]
-    subprocess.run(cmd)
-
-def _build_fastnoise2_lib():
-    cmd = [
-        'cmake', '--build', './FastNoise2/build',
-        '--config', 'Release'
-    ]
-    subprocess.run(cmd)
+Import("env")
 
 _generate_fastnoise2_proj()
 _build_fastnoise2_lib()
 
 env_gdfastnoise2 = env.Clone()
-env_gdfastnoise2.add_source_files(env.module_sources, '*.h')
-env_gdfastnoise2.add_source_files(env.module_sources, '*.cpp')
+env_gdfastnoise2.add_source_files(env.modules_sources, '*.cpp')
 
-env_gdfastnoise2.Append(CPPATH=["FastNoise2/include"])
+env_gdfastnoise2.Prepend(CPPATH=[".", "./FastNoise2/include/FastNoise", "./FastNoise2/include/FastSIMD"])
 env.Append(LIBPATH=['FastNoise2/build/src'])
 env.Append(LIBS=['FastNoise'])
