@@ -6,6 +6,8 @@ env_gdfastnoise2 = env.Clone()
 
 # FastNoise source files
 fastnoise2_dir = "./FastNoise2/include/"
+fastnoise2_lib_dir = "./FastNoise2/build/src/Release/"
+
 env_gdfastnoise2.Prepend(CPPPATH=[fastnoise2_dir])
 
 # GD Source files
@@ -14,6 +16,9 @@ gdfastnoise2_obj = []
 env_gdfastnoise2.add_source_files(gdfastnoise2_obj, "*.cpp")
 env.modules_sources += gdfastnoise2_obj
 
-env_gdfastnoise2.Append(LIBPATH=["./FastNoise2/build/src/Release/"])
-env_gdfastnoise2.Append(LIBS=['FastNoise'])
-env_gdfastnoise2["LIBSUFFIXES"] = ""
+if env.msvc:
+    env.Append(LIBS=[File(fastnoise2_lib_dir + "FastNoise.lib")])
+else:
+    env.Append(LIBS=['FastNoise'])
+
+env.Append(LIBPATH=[fastnoise2_lib_dir])

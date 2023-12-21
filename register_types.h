@@ -3,7 +3,7 @@
 
 #include <modules/register_module_types.h>
 
-void initialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {}
-void uninitialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {}
+void initialize_GDFastNoise2_module(ModuleInitializationLevel p_level);
+void uninitialize_GDFastNoise2_module(ModuleInitializationLevel p_level);
 
 #endif

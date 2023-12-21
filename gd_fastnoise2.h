@@ -1,6 +1,7 @@
 #include <core/object/ref_counted.h>
 
 #include <modules/GDFastNoise2/FastNoise2/include/FastNoise/FastNoise.h>
+#include <core/variant/typed_array.h>
 
 namespace _FastNoise = FastNoise;
 
@@ -9,6 +10,11 @@ class FNSimplex : public RefCounted {
 
 public:
     FNSimplex();
+
+	PackedFloat32Array GenUniformGrid2D(
+		int x_start, int y_start,
+		int width, int height,
+		float frequency = 0.2f, int seed = 1337);
 
 protected:
     // No public default constructor
