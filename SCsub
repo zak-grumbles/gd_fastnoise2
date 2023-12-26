@@ -5,8 +5,19 @@ Import("env")
 env_gdfastnoise2 = env.Clone()
 
 # FastNoise source files
-fastnoise2_dir = "./FastNoise2/include/"
-fastnoise2_lib_dir = "./FastNoise2/build/src/Release/"
+fastnoise2_dir = "FastNoise2/"
+fastnoise2_inc_dir = fastnoise2_dir + "include/"
+fastnoise2_lib_dir = fastnoise2_dir + "build/src/Release/"
+
+def gen_fastnoise2_proj():
+    import subprocess
+    subprocess.run([
+        "cmake",
+        "-S", "./FastNoise2/build",
+        "-D", "FASTNOISE2_NOISETOOL=OFF",
+        "-D", "FASTNOISE2_TESTS=OFF",
+        "-D", "BUILD_SHARED_LIBS=OFF"
+    ])
 
 env_gdfastnoise2.Prepend(CPPPATH=[fastnoise2_dir])
 
@@ -17,6 +28,7 @@ env_gdfastnoise2.add_source_files(gdfastnoise2_obj, "*.cpp")
 env.modules_sources += gdfastnoise2_obj
 
 if env.msvc:
+    env.Append(LINKFLAGS=["/NODEFAULTLIB:FastNoise.lib"])
     env.Append(LIBS=[File(fastnoise2_lib_dir + "FastNoise.lib")])
 else:
     env.Append(LIBS=['FastNoise'])
