@@ -1,7 +1,10 @@
-#include <core/object/ref_counted.h>
+#ifndef GDFastNoise2_GDFASTNOISE2_H
+#define GDFastNoise2_GDFASTNOISE2_H
 
-#include <modules/GDFastNoise2/FastNoise2/include/FastNoise/FastNoise.h>
+#include <core/io/image.h>
+#include <core/object/ref_counted.h>
 #include <core/variant/typed_array.h>
+#include <modules/GDFastNoise2/FastNoise2/include/FastNoise/FastNoise.h>
 
 namespace _FastNoise = FastNoise;
 
@@ -23,6 +26,12 @@ public:
 		int width, int height,
 		float frequency = 0.2f, int seed = 1337
 	) const;
+
+    Ref<Image> GenUniform2DImage(
+        int x_start, int y_start,
+        int width, int height,
+        float frequency = 0.2f, int seed = 1337
+    ) const;
 
 	PackedFloat32Array GenUniformGrid3D(
 		int x_start, int y_start, int z_start,
@@ -64,3 +73,5 @@ protected:
 
 	ModifierType _mod_type;
 };
+
+#endif

@@ -32,6 +32,30 @@ PackedFloat32Array FNGenerator::GenUniformGrid2D(
 	return output;
 }
 
+Ref<Image> FNGenerator::GenUniform2DImage(
+    int x_start, int y_start,
+    int width, int height,
+    float frequency, int seed
+) const {
+
+    auto gen_rgba8 = _FastNoise::New<_FastNoise::ConvertRGBA8>(_node->GetSIMDLevel());
+    gen_rgba8->SetSource(_node);
+    
+    PackedFloat32Array data;
+    data.resize_zeroed(width * height);
+    gen_rgba8->GenUniformGrid2D(data.ptrw(),
+        x_start, y_start,
+        width, height,
+        frequency, seed
+    );
+
+    Ref<Image> img = Image::create_from_data(width, height,
+        false, Image::Format::FORMAT_RGBA8,
+        data.to_byte_array());
+
+    return img;
+}
+
 PackedFloat32Array FNGenerator::GenUniformGrid3D(
 	int x_start, int y_start, int z_start,
 	int width, int height, int depth,
@@ -58,6 +82,10 @@ void FNGenerator::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("GenUniformGrid2D",
 		"x_start", "y_start", "width", "height",
 		"frequency", "seed"), &FNGenerator::GenUniformGrid2D);
+    ClassDB::bind_method(D_METHOD("GenUniform2DImage",
+        "x_start", "y_start", "width", "height",
+        "frequency", "seed"), &FNGenerator::GenUniform2DImage);
+
 	ClassDB::bind_method(D_METHOD("GenUniformGrid3D",
 		"x_start", "y_start", "z_start",
 		"width", "height", "depth",
