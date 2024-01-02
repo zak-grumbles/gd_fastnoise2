@@ -4,7 +4,7 @@
 
 #include "gd_fastnoise2.h"
 
-void initialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {
+void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
@@ -13,5 +13,5 @@ void initialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<FNModifier>();
 }
 
-void uninitialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {
+void uninitialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 }

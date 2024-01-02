@@ -1,10 +1,10 @@
-#ifndef GDFastNoise2_GDFASTNOISE2_H
-#define GDFastNoise2_GDFASTNOISE2_H
+#ifndef gd_fastnoise2_GDFASTNOISE2_H
+#define gd_fastnoise2_GDFASTNOISE2_H
 
 #include <core/io/image.h>
 #include <core/object/ref_counted.h>
 #include <core/variant/typed_array.h>
-#include <modules/GDFastNoise2/FastNoise2/include/FastNoise/FastNoise.h>
+#include <modules/gd_fastnoise2/FastNoise2/include/FastNoise/FastNoise.h>
 
 namespace _FastNoise = FastNoise;
 
@@ -19,27 +19,27 @@ public:
 
 	FNGenerator(int type);
 
-	static FNGenerator* NewGenerator(int type);
+	static FNGenerator* new_generator(int type);
 
-	PackedFloat32Array GenUniformGrid2D(
+	PackedFloat32Array gen_uniform_grid_2D(
 		int x_start, int y_start,
 		int width, int height,
 		float frequency = 0.2f, int seed = 1337
 	) const;
 
-    Ref<Image> GenUniform2DImage(
+    Ref<Image> gen_uniform_2D_image(
         int x_start, int y_start,
         int width, int height,
         float frequency = 0.2f, int seed = 1337
     ) const;
 
-	PackedFloat32Array GenUniformGrid3D(
+	PackedFloat32Array gen_uniform_grid_3D(
 		int x_start, int y_start, int z_start,
 		int width, int height, int depth,
 		float frequency = 0.2f, int seed = 1337
 	) const;
 
-	_FastNoise::SmartNode<_FastNoise::Generator> GetSmartNode() const { return _node; }
+	_FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
 
 protected:
 	FNGenerator() = default;
@@ -60,16 +60,16 @@ public:
 
 	FNModifier(int type);
 
-	static FNModifier* NewModifier(int type);
+	static FNModifier* new_modifier(int type);
 
-	void SetSource(FNGenerator* src);
+	void set_source(FNGenerator* src);
 
 protected:
 	FNModifier() = default;
 	static void _bind_methods();
 	static void _bind_mod_type_enum();
 
-	void _SetSourceFractal(FNGenerator* src);
+	void _set_source_fractal(FNGenerator* src);
 
 	ModifierType _mod_type;
 };
