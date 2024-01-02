@@ -10,6 +10,7 @@ void initialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {
 	}
 
 	ClassDB::register_class<FNGenerator>();
+	ClassDB::register_class<FNModifier>();
 }
 
 void uninitialize_GDFastNoise2_module(ModuleInitializationLevel p_level) {

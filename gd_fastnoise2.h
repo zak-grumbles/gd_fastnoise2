@@ -11,13 +11,12 @@ class FNGenerator : public RefCounted {
 public:
 	enum GeneratorType {
 		SIMPLEX = 0,
-		PERLIN,
-		FRACTAL
+		PERLIN
 	};
 
-	FNGenerator() = default;
+	FNGenerator(int type);
 
-	static FNGenerator* New(int type);
+	static FNGenerator* NewGenerator(int type);
 
 	PackedFloat32Array GenUniformGrid2D(
 		int x_start, int y_start,
@@ -31,11 +30,37 @@ public:
 		float frequency = 0.2f, int seed = 1337
 	) const;
 
-protected:
-	FNGenerator(int type);
-    static void _bind_methods();
-	GeneratorType _gen_type;
+	_FastNoise::SmartNode<_FastNoise::Generator> GetSmartNode() const { return _node; }
 
-private:
+protected:
+	FNGenerator() = default;
+    static void _bind_methods();
+	static void _bind_generator_type_enum();
+
+	GeneratorType _gen_type;
 	_FastNoise::SmartNode<_FastNoise::Generator> _node;
+};
+
+class FNModifier : public FNGenerator {
+	GDCLASS(FNModifier, FNGenerator)
+
+public:
+	enum ModifierType {
+		FRACTAL_FBM = 0
+	};
+
+	FNModifier(int type);
+
+	static FNModifier* NewModifier(int type);
+
+	void SetSource(FNGenerator* src);
+
+protected:
+	FNModifier() = default;
+	static void _bind_methods();
+	static void _bind_mod_type_enum();
+
+	void _SetSourceFractal(FNGenerator* src);
+
+	ModifierType _mod_type;
 };
