@@ -1,7 +1,5 @@
 #include "gd_fastnoise2.h"
 
-#include <type_traits>
-
 FNGenerator::FNGenerator(int type) {
 	_gen_type = static_cast<FNGenerator::GeneratorType>(type);
 	switch(_gen_type) {
@@ -40,8 +38,11 @@ Ref<Image> FNGenerator::gen_uniform_2D_image(
     float frequency, int seed
 ) const {
 
-    auto gen_rgba8 = _FastNoise::New<_FastNoise::ConvertRGBA8>(_node->GetSIMDLevel());
-    gen_rgba8->SetSource(_node);
+	auto src_node = _get_smart_node();
+
+	_FastNoise::SmartNode<_FastNoise::ConvertRGBA8> gen_rgba8;
+    gen_rgba8 = _FastNoise::New<_FastNoise::ConvertRGBA8>(src_node->GetSIMDLevel());
+	gen_rgba8->SetSource(src_node);
     
     PackedFloat32Array data;
     data.resize_zeroed(width * height);
@@ -99,59 +100,13 @@ void FNGenerator::_bind_generator_type_enum() {
 	ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "Perlin", 1);
 }
 
-FNModifier::FNModifier(int type) {
-	_mod_type = static_cast<FNModifier::ModifierType>(type);
-
-	switch(_mod_type) {
-		case FRACTAL_FBM:
-		default:
-			_node = _FastNoise::New<_FastNoise::FractalFBm>();
-			break;
-	}
-}
-
-FNModifier *FNModifier::new_modifier(int type) {
-	return new FNModifier(type);
-}
-
-void FNModifier::set_source(FNGenerator *src) {
-	switch(_mod_type) {
-		case FRACTAL_FBM:
-			_set_source_fractal(src);
-			break;
-		default:
-			break;
-	}
-}
-
-void FNModifier::_bind_methods() {
-	_bind_mod_type_enum();
-
-	ClassDB::bind_static_method("FNModifier", 
-		D_METHOD("new_modifier", "mod_type"),
-		&FNModifier::new_modifier);
-
-	ClassDB::bind_method(D_METHOD("set_source", "src"), &FNModifier::set_source);
-}
-
-void FNModifier::_bind_mod_type_enum() {
-	ClassDB::bind_integer_constant("FNModifier", "ModifierType", "FractalFBm", 0);
-}
-
-void FNModifier::_set_source_fractal(FNGenerator *src) {
-	_FastNoise::SmartNode<_FastNoise::FractalFBm> frac;
-	frac = _FastNoise::SmartNode<_FastNoise::FractalFBm>::DynamicCast(_node);
-
-	frac->SetSource(src->_get_smart_node());
-}
-
 FNFractal::FNFractal(FractalType type) {
 	_frac_type = type;
 
 	switch(_frac_type) {
 		case FractalType::FBm:
 		default:
-			_node = _FastNoise::New<_FastNoise::FractalFBm>();
+			_frac_node = _FastNoise::New<_FastNoise::FractalFBm>();
 			break;
 	}
 }
@@ -162,11 +117,22 @@ FNFractal *FNFractal::new_fractal(int type) {
 }
 
 void FNFractal::set_source(FNGenerator *src) {
-	_node->SetSource(src->get_smart_node());
+	_frac_node->SetSource(src->_get_smart_node());
 }
 
 void FNFractal::_bind_methods() {
+	_bind_frac_type_enum();
+
+	ClassDB::bind_static_method("FNFractal", 
+		D_METHOD("new_fractal", "type"),
+		&FNFractal::new_fractal);
+
+	ClassDB::bind_method(D_METHOD("set_source", "src"),
+		&FNFractal::set_source);
 }
 
 void FNFractal::_bind_frac_type_enum() {
+	ClassDB::bind_integer_constant("FNFractal", "FractalType", "FBm", 0);
+	ClassDB::bind_integer_constant("FNFractal", "FractalType", "Ridged", 1);
+	ClassDB::bind_integer_constant("FNFractal", "FractalType", "PingPong", 2);
 }

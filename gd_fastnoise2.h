@@ -4,7 +4,8 @@
 #include <core/io/image.h>
 #include <core/object/ref_counted.h>
 #include <core/variant/typed_array.h>
-#include <modules/gd_fastnoise2/FastNoise2/include/FastNoise/FastNoise.h>
+#include "FastNoise2/include/FastNoise/FastNoise.h"
+#include "FastNoise2/include/FastNoise/Generators/Fractal.h"
 
 namespace _FastNoise = FastNoise;
 
@@ -39,7 +40,9 @@ public:
 		float frequency = 0.2f, int seed = 1337
 	) const;
 
-	_FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
+	virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const {
+		 return _node; 
+	}
 
 protected:
 	FNGenerator() = default;
@@ -47,6 +50,8 @@ protected:
 	static void _bind_generator_type_enum();
 
 	GeneratorType _gen_type;
+
+private:
 	_FastNoise::SmartNode<_FastNoise::Generator> _node;
 };
 
@@ -55,7 +60,7 @@ class FNFractal : public FNGenerator {
 
 public:
 	enum FractalType {
-		FBm,
+		FBm = 0,
 		Ridged,
 		PingPong
 	};
@@ -66,6 +71,10 @@ public:
 
 	void set_source(FNGenerator* src);
 
+	_FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const override {
+		 return _frac_node; 
+	}
+
 protected:
 	FNFractal() = default;
 
@@ -73,6 +82,9 @@ protected:
 	static void _bind_frac_type_enum();
 
 	FractalType _frac_type = FractalType::FBm;
+
+private:
+	_FastNoise::SmartNode<_FastNoise::Fractal<>> _frac_node;
 };
 
 #endif
