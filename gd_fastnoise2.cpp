@@ -1,5 +1,7 @@
 #include "gd_fastnoise2.h"
 
+#include <type_traits>
+
 FNGenerator::FNGenerator(int type) {
 	_gen_type = static_cast<FNGenerator::GeneratorType>(type);
 	switch(_gen_type) {
@@ -141,4 +143,30 @@ void FNModifier::_set_source_fractal(FNGenerator *src) {
 	frac = _FastNoise::SmartNode<_FastNoise::FractalFBm>::DynamicCast(_node);
 
 	frac->SetSource(src->_get_smart_node());
+}
+
+FNFractal::FNFractal(FractalType type) {
+	_frac_type = type;
+
+	switch(_frac_type) {
+		case FractalType::FBm:
+		default:
+			_node = _FastNoise::New<_FastNoise::FractalFBm>();
+			break;
+	}
+}
+
+FNFractal *FNFractal::new_fractal(int type) {
+	FractalType frac_type = static_cast<FractalType>(type);
+	return new FNFractal(frac_type);
+}
+
+void FNFractal::set_source(FNGenerator *src) {
+	_node->SetSource(src->get_smart_node());
+}
+
+void FNFractal::_bind_methods() {
+}
+
+void FNFractal::_bind_frac_type_enum() {
 }

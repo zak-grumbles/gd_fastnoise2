@@ -10,7 +10,7 @@ void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	}
 
 	ClassDB::register_class<FNGenerator>();
-	ClassDB::register_class<FNModifier>();
+	ClassDB::register_class<FNFractal>();
 }
 
 void uninitialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {

@@ -50,28 +50,29 @@ protected:
 	_FastNoise::SmartNode<_FastNoise::Generator> _node;
 };
 
-class FNModifier : public FNGenerator {
-	GDCLASS(FNModifier, FNGenerator)
+class FNFractal : public FNGenerator {
+	GDCLASS(FNFractal, FNGenerator)
 
 public:
-	enum ModifierType {
-		FRACTAL_FBM = 0
+	enum FractalType {
+		FBm,
+		Ridged,
+		PingPong
 	};
 
-	FNModifier(int type);
+	FNFractal(FractalType type);
 
-	static FNModifier* new_modifier(int type);
+	static FNFractal* new_fractal(int type);
 
 	void set_source(FNGenerator* src);
 
 protected:
-	FNModifier() = default;
+	FNFractal() = default;
+
 	static void _bind_methods();
-	static void _bind_mod_type_enum();
+	static void _bind_frac_type_enum();
 
-	void _set_source_fractal(FNGenerator* src);
-
-	ModifierType _mod_type;
+	FractalType _frac_type = FractalType::FBm;
 };
 
 #endif
