@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FNGenerator" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../doc/class.xsd">
+	<brief_description>
+        A FastNoise2 noise generator. 
+        Also serves as the base class for any related classes that can generate noise.
+	</brief_description>
+	<description>
+        This object allows you to generate noise of various types.
+	</description>
+    <methods>
+		<method name="new_generator" qualifiers="static">
+			<return type="FNGenerator*" />
+			<param index="0" name="type" type="int" enum="GeneratorType" />
+			<description>
+                Constructs and returns a new [FNGenerator] with the specified [param type].
+			</description>
+		</method>
+    </methods>
+</class>

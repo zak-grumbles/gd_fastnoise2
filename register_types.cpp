@@ -2,7 +2,8 @@
 
 #include <core/object/class_db.h>
 
-#include "gd_fastnoise2.h"
+#include "fn_generator.h"
+#include "fn_fractal.h"
 
 void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
