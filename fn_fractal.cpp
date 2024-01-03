@@ -29,6 +29,14 @@ void FNFractal::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("set_source", "src"),
         &FNFractal::set_source);
+    ClassDB::bind_method(D_METHOD("set_gain", "value"),
+        &FNFractal::set_gain);
+    ClassDB::bind_method(D_METHOD("set_weighted_strength", "value"),
+        &FNFractal::set_weighted_strength);
+    ClassDB::bind_method(D_METHOD("set_octave_count", "value"),
+        &FNFractal::set_octave_count);
+    ClassDB::bind_method(D_METHOD("set_lacunarity", "value"),
+        &FNFractal::set_lacunarity);
 }
 
 void FNFractal::_bind_frac_type_enum() {

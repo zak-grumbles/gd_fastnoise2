@@ -20,6 +20,10 @@ public:
 	static FNFractal* new_fractal(int type);
 
 	void set_source(FNGenerator* src);
+	void set_gain(float value) const { _frac_node->SetGain(value); }
+	void set_weighted_strength(float value) const { _frac_node->SetWeightedStrength(value); }
+	void set_octave_count(int value) const { _frac_node->SetOctaveCount(value); }
+	void set_lacunarity(float value) const { _frac_node->SetLacunarity(value); }
 
 	_FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const override {
 		 return _frac_node; 
