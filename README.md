@@ -1,5 +1,5 @@
 # gd_fastnoise2
-Extension for the [Godot engine](https://github.com/godotengine/godot) that wraps the [FastNoise2](https://github.com/Auburn/FastNoise2) library and exposes functionality to GDScript.
+WIP extension for the [Godot engine](https://github.com/godotengine/godot) that wraps the [FastNoise2](https://github.com/Auburn/FastNoise2) library and exposes functionality to GDScript.
 
 ## Building
 For the most part, the module gets built along with godot. However, you will need to build the FastNoise2 library first. 
