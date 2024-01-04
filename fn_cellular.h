@@ -26,7 +26,6 @@ public:
 	}
 
 protected:
-
     static void _bind_methods();
     static void _bind_cellular_type_enum();
     static void _bind_distance_func_enum();
@@ -67,5 +66,21 @@ protected:
 private:
     _FastNoise::SmartNode<_FastNoise::CellularDistance> _casted_node;
 };
+
+class FNCellularLookup : public FNCellular {
+    GDCLASS(FNCellularLookup, FNCellular)
+
+public:
+    FNCellularLookup();
+
+    void set_lookup(FNGenerator* gen);
+    void set_lookup_frequency(float freq) { _casted_node->SetLookupFrequency(freq); }
+
+protected:
+    static void _bind_methods();
+
+private:
+    _FastNoise::SmartNode<_FastNoise::CellularLookup> _casted_node;
+}
 
 #endif

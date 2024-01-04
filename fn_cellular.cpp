@@ -135,3 +135,25 @@ void FNCellularDistance::_bind_return_type_enum() {
         static_cast<int64_t>(_FastNoise::CellularDistance::ReturnType::Index0Div1)
     );
 }
+
+FNCellularLookup::FNCellularLookup() {
+    _cell_type = FNCellular::CellularType::CellularLookup;
+    _cell_node = _FastNoise::New<_FastNoise::CellularLookup>();
+    _casted_node = _FastNoise::SmartNode<_FastNoise::CellularLookup>::DynamicCast(
+        _cell_node);
+}
+
+void FNCellularLookup::set_lookup(FNGenerator *gen) {
+    _casted_node->SetLookup(gen->_get_smart_node());
+}
+
+void FNCellularLookup::_bind_methods() {
+    ClassDB::bind_method(
+        D_METHOD("set_lookup", "gen"),
+        &FNCellularLookup::set_lookup
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_lookup_frequency", "freq"),
+        &FNCellularLookup::set_lookup_frequency
+    );
+}
