@@ -15,6 +15,7 @@ void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<FNFractal>();
 	ClassDB::register_class<FNCellular>();
 	ClassDB::register_class<FNCellularValue>();
+	ClassDB::register_class<FNCellularDistance>();
 }
 
 void uninitialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {

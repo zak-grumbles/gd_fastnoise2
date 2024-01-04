@@ -85,5 +85,53 @@ void FNCellularValue::_bind_methods() {
 FNCellularDistance::FNCellularDistance() {
     _cell_type = CellularType::CellularDistance;
     _cell_node = _FastNoise::New<_FastNoise::CellularDistance>();
-    _casted_node = _FastNoise::SmartNode<_FastNoise::CellularDistance>(_cell_node);
+    _casted_node = _FastNoise::SmartNode<_FastNoise::CellularDistance>::DynamicCast(_cell_node);
+}
+
+void FNCellularDistance::set_return_type(int type) {
+    auto type = static_cast<_FastNoise::CellularDistance::ReturnType>(type);
+    _casted_node->SetReturnType(type);
+}
+
+void FNCellularDistance::_bind_methods() {
+    ClassDB::bind_method(
+        D_METHOD("set_distance_index0", "value"),
+        &FNCellularDistance::set_distance_index0
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_distance_index1", "value"),
+        &FNCellularDistance::set_distance_index1
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_return_type", "value"),
+        &FNCellularDistance::set_return_type
+    );
+}
+
+void FNCellularDistance::_bind_return_type_enum() {
+    ClassDB::bind_integer_constant(
+        "FNCellularDistance", "ReturnType",
+        "Index0",
+        static_cast<int64_t>(_FastNoise::CellularDistance::ReturnType::Index0)
+    );
+    ClassDB::bind_integer_constant(
+        "FNCellularDistance", "ReturnType",
+        "Index0Add1",
+        static_cast<int64_t>(_FastNoise::CellularDistance::ReturnType::Index0Add1)
+    );
+    ClassDB::bind_integer_constant(
+        "FNCellularDistance", "ReturnType",
+        "Index0Sub1",
+        static_cast<int64_t>(_FastNoise::CellularDistance::ReturnType::Index0Sub1)
+    );
+    ClassDB::bind_integer_constant(
+        "FNCellularDistance", "ReturnType",
+        "Index0Mul1",
+        static_cast<int64_t>(_FastNoise::CellularDistance::ReturnType::Index0Mul1)
+    );
+    ClassDB::bind_integer_constant(
+        "FNCellularDistance", "ReturnType",
+        "Index0Div1",
+        static_cast<int64_t>(_FastNoise::CellularDistance::ReturnType::Index0Div1)
+    );
 }

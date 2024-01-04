@@ -56,8 +56,13 @@ class FNCellularDistance : public FNCellular {
 public:
     FNCellularDistance();
 
+    void set_distance_index0(int value) { _casted_node->SetDistanceIndex0(value); }
+    void set_distance_index1(int value) { _casted_node->SetDistanceIndex1(value); }
+    void set_return_type(int type);
+
 protected:
     static void _bind_methods();
+    static void _bind_return_type_enum();
 
 private:
     _FastNoise::SmartNode<_FastNoise::CellularDistance> _casted_node;
