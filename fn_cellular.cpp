@@ -89,8 +89,8 @@ FNCellularDistance::FNCellularDistance() {
 }
 
 void FNCellularDistance::set_return_type(int type) {
-    auto type = static_cast<_FastNoise::CellularDistance::ReturnType>(type);
-    _casted_node->SetReturnType(type);
+    auto ret_type = static_cast<_FastNoise::CellularDistance::ReturnType>(type);
+    _casted_node->SetReturnType(ret_type);
 }
 
 void FNCellularDistance::_bind_methods() {

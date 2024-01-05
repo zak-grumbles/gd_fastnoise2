@@ -108,10 +108,28 @@ void FNGenerator::_bind_methods() {
 }
 
 void FNGenerator::_bind_generator_type_enum() {
-    ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "Simplex", 0);
-    ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "Perlin", 1);
-    ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "CellularValue", 2);
-    ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "CellularDistance", 3);
-    ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "CellularLookup", 4);
-    ClassDB::bind_integer_constant("FNGenerator", "GeneratorType", "Value", 5);
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "Simplex",static_cast<int64_t>(GeneratorType::Simplex)
+    );
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "Perlin", static_cast<int64_t>(GeneratorType::Perlin)
+    );
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "CellularValue", static_cast<int64_t>(GeneratorType::CellularValue)
+    );
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "CellularDistance", static_cast<int64_t>(GeneratorType::CellularDistance)
+    );
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "CellularLookup", static_cast<int64_t>(GeneratorType::CellularLookup)
+    );
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "Value", static_cast<int64_t>(GeneratorType::Value)
+    );
 }

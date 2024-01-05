@@ -81,6 +81,6 @@ protected:
 
 private:
     _FastNoise::SmartNode<_FastNoise::CellularLookup> _casted_node;
-}
+};
 
 #endif
