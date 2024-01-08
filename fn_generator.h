@@ -9,27 +9,27 @@
 namespace _FastNoise = FastNoise;
 
 class FNGenerator : public RefCounted {
-	GDCLASS(FNGenerator, RefCounted)
+    GDCLASS(FNGenerator, RefCounted)
 
 public:
-	enum GeneratorType {
-		Simplex = 0,
-		Perlin,
-		CellularValue,
-		CellularDistance,
-		CellularLookup,
-		Value
-	};
+    enum GeneratorType {
+        Simplex = 0,
+        Perlin,
+        CellularValue,
+        CellularDistance,
+        CellularLookup,
+        Value
+    };
 
-	FNGenerator(int type);
+    FNGenerator(int type);
 
-	static FNGenerator* new_generator(int type);
+    static FNGenerator* new_generator(int type);
 
-	PackedFloat32Array gen_uniform_grid_2D(
-		int x_start, int y_start,
-		int width, int height,
-		float frequency = 0.2f, int seed = 1337
-	) const;
+    PackedFloat32Array gen_uniform_grid_2D(
+        int x_start, int y_start,
+        int width, int height,
+        float frequency = 0.2f, int seed = 1337
+    ) const;
 
     Ref<Image> gen_uniform_2D_image(
         int x_start, int y_start,
@@ -37,25 +37,30 @@ public:
         float frequency = 0.2f, int seed = 1337
     ) const;
 
-	PackedFloat32Array gen_uniform_grid_3D(
-		int x_start, int y_start, int z_start,
-		int width, int height, int depth,
-		float frequency = 0.2f, int seed = 1337
-	) const;
+    PackedFloat32Array gen_uniform_grid_3D(
+        int x_start, int y_start, int z_start,
+        int width, int height, int depth,
+        float frequency = 0.2f, int seed = 1337
+    ) const;
 
-	virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const {
-		 return _node; 
-	}
+    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const {
+         return _node; 
+    }
+
+    int get_type() const;
+    void set_type(int type);
 
 protected:
-	FNGenerator() = default;
+    FNGenerator() = default;
     static void _bind_methods();
-	static void _bind_generator_type_enum();
+    static void _bind_generator_type_enum();
 
-	GeneratorType _gen_type;
+    void _init_node();
+
+    GeneratorType _gen_type;
 
 private:
-	_FastNoise::SmartNode<_FastNoise::Generator> _node;
+    _FastNoise::SmartNode<_FastNoise::Generator> _node;
 };
 
 #endif

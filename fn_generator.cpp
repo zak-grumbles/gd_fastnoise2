@@ -2,27 +2,7 @@
 
 FNGenerator::FNGenerator(int type) {
     _gen_type = static_cast<FNGenerator::GeneratorType>(type);
-    switch(_gen_type) {
-        case Simplex:
-        default:
-            _node = _FastNoise::New<_FastNoise::Simplex>();
-            break;
-        case Perlin:
-            _node = _FastNoise::New<_FastNoise::Perlin>();
-            break;
-        case CellularValue:
-            _node = _FastNoise::New<_FastNoise::CellularValue>();
-            break;
-        case CellularDistance:
-            _node = _FastNoise::New<_FastNoise::CellularDistance>();
-            break;
-        case CellularLookup:
-            _node = _FastNoise::New<_FastNoise::CellularLookup>();
-            break;
-        case Value:
-            _node = _FastNoise::New<_FastNoise::Value>();
-            break;
-    }
+    _init_node();
 }
 
 FNGenerator *FNGenerator::new_generator(int type) {
@@ -87,6 +67,15 @@ PackedFloat32Array FNGenerator::gen_uniform_grid_3D(
     return noise_output;
 }
 
+int FNGenerator::get_type() const {
+    return static_cast<int>(_gen_type);
+}
+
+void FNGenerator::set_type(int type) {
+    _gen_type = static_cast<FNGenerator::GeneratorType>(type);
+    _init_node();
+}
+
 void FNGenerator::_bind_methods() {
     _bind_generator_type_enum();
 
@@ -105,6 +94,14 @@ void FNGenerator::_bind_methods() {
         "x_start", "y_start", "z_start",
         "width", "height", "depth",
         "frequency", "seed"), &FNGenerator::gen_uniform_grid_3D);
+    ClassDB::bind_method(
+        D_METHOD("get_type"),
+        &FNGenerator::get_type
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_type", "type"),
+        &FNGenerator::set_type
+    );
 }
 
 void FNGenerator::_bind_generator_type_enum() {
@@ -132,4 +129,32 @@ void FNGenerator::_bind_generator_type_enum() {
         "FNGenerator", "GeneratorType",
         "Value", static_cast<int64_t>(GeneratorType::Value)
     );
+}
+
+void FNGenerator::_init_node() {
+    if(_node) {
+        _node.reset();
+    }
+
+    switch(_gen_type) {
+        case Simplex:
+        default:
+            _node = _FastNoise::New<_FastNoise::Simplex>();
+            break;
+        case Perlin:
+            _node = _FastNoise::New<_FastNoise::Perlin>();
+            break;
+        case CellularValue:
+            _node = _FastNoise::New<_FastNoise::CellularValue>();
+            break;
+        case CellularDistance:
+            _node = _FastNoise::New<_FastNoise::CellularDistance>();
+            break;
+        case CellularLookup:
+            _node = _FastNoise::New<_FastNoise::CellularLookup>();
+            break;
+        case Value:
+            _node = _FastNoise::New<_FastNoise::Value>();
+            break;
+    }
 }
