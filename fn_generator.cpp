@@ -51,6 +51,35 @@ Ref<Image> FNGenerator::gen_uniform_2D_image(
     return img;
 }
 
+Ref<ArrayMesh> FNGenerator::gen_mesh_2D(int x_start, int y_start, int width, int height, float frequency, int seed) const {
+
+    PackedFloat32Array noise;
+    noise.resize_zeroed(width * height);
+
+    _node->GenUniformGrid2D(noise.ptrw(),
+        x_start, y_start,
+        width, height,
+        frequency, seed
+    );
+
+
+    PackedVector3Array verts;
+    PackedVector2Array uvs;
+    PackedVector3Array normals;
+    PackedInt32Array indices;
+
+    Array mesh_array;
+    mesh_array.resize(Mesh::ARRAY_MAX);
+    mesh_array[Mesh::ARRAY_VERTEX] = verts;
+    mesh_array[Mesh::ARRAY_TEX_UV] = uvs;
+    mesh_array[Mesh::ARRAY_NORMAL] = normals;
+    mesh_array[Mesh::ARRAY_INDEX] = indices;
+
+    Ref<ArrayMesh> mesh;
+    mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, mesh_array);
+	return mesh;
+}
+
 PackedFloat32Array FNGenerator::gen_uniform_grid_3D(
     int x_start, int y_start, int z_start,
     int width, int height, int depth,
@@ -94,6 +123,7 @@ void FNGenerator::_bind_methods() {
         "x_start", "y_start", "z_start",
         "width", "height", "depth",
         "frequency", "seed"), &FNGenerator::gen_uniform_grid_3D);
+
     ClassDB::bind_method(
         D_METHOD("get_type"),
         &FNGenerator::get_type

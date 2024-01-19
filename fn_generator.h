@@ -4,6 +4,8 @@
 #include <core/io/image.h>
 #include <core/object/ref_counted.h>
 #include <core/variant/typed_array.h>
+#include <scene/resources/mesh.h>
+
 #include "FastNoise2/include/FastNoise/FastNoise.h"
 
 namespace _FastNoise = FastNoise;
@@ -32,6 +34,12 @@ public:
     ) const;
 
     Ref<Image> gen_uniform_2D_image(
+        int x_start, int y_start,
+        int width, int height,
+        float frequency = 0.2f, int seed = 1337
+    ) const;
+
+    Ref<ArrayMesh> gen_mesh_2D(
         int x_start, int y_start,
         int width, int height,
         float frequency = 0.2f, int seed = 1337

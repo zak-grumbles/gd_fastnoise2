@@ -1,7 +1,7 @@
 #include "fn_cellular.h"
 
 void FNCellular::set_distance_func(int value) {
-    auto func = static_cast<_FastNoise::DistanceFunction>(value);
+	auto func = static_cast<_FastNoise::DistanceFunction>(value);
     _cell_node->SetDistanceFunction(func);
 }
 
@@ -94,6 +94,7 @@ void FNCellularDistance::set_return_type(int type) {
 }
 
 void FNCellularDistance::_bind_methods() {
+    _bind_return_type_enum();
     ClassDB::bind_method(
         D_METHOD("set_distance_index0", "value"),
         &FNCellularDistance::set_distance_index0
