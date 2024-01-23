@@ -40,3 +40,62 @@ void FNSineWave::_bind_methods() {
         &FNSineWave::set_scale
     );
 }
+
+FNPositionOutput::FNPositionOutput() {
+    _node = _FastNoise::New<_FastNoise::PositionOutput>();
+}
+
+void FNPositionOutput::_bind_methods() {
+    ClassDB::bind_method(
+        D_METHOD("set_x", "multiplier", "offset"),
+        &FNPositionOutput::set_x
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_y", "multiplier", "offset"),
+        &FNPositionOutput::set_y
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_z", "multiplier", "offset"),
+        &FNPositionOutput::set_z
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_w", "multiplier", "offset"),
+        &FNPositionOutput::set_w
+    );
+}
+
+FNDistanceToPoint::FNDistanceToPoint() {
+    _node = _FastNoise::New<_FastNoise::DistanceToPoint>();
+}
+
+void FNDistanceToPoint::set_distance_function(int64_t func) {
+    _FastNoise::DistanceFunction fn_func = static_cast<_FastNoise::DistanceFunction>(func);
+    _node->SetDistanceFunction(fn_func);
+}
+
+void FNDistanceToPoint::_bind_methods() {
+    ClassDB::bind_method(
+        D_METHOD("set_source", "gen"),
+        &FNDistanceToPoint::set_source
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_distance_function", "func"),
+        &FNDistanceToPoint::set_distance_function
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_x_scale", "value"),
+        &FNDistanceToPoint::set_x_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_y_scale", "value"),
+        &FNDistanceToPoint::set_y_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_z_scale", "value"),
+        &FNDistanceToPoint::set_z_scale
+    );
+    ClassDB::bind_method(
+        D_METHOD("set_w_scale", "value"),
+        &FNDistanceToPoint::set_w_scale
+    );
+}

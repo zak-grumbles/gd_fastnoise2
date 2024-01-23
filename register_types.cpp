@@ -26,6 +26,8 @@ void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<FNWhite>();
 	ClassDB::register_class<FNCheckerboard>();
 	ClassDB::register_class<FNSineWave>();
+	ClassDB::register_class<FNPositionOutput>();
+	ClassDB::register_class<FNDistanceToPoint>();
 
 	// Blends
 	ClassDB::register_class<FNOpSourceLHS>();
