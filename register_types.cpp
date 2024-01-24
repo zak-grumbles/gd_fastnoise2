@@ -8,6 +8,7 @@
 #include "fn_basic_generators.h"
 #include "fn_blends.h"
 #include "fn_domain_warp.h"
+#include "fn_modifiers.h"
 
 void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -33,6 +34,10 @@ void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	// Domain Warp
 	ClassDB::register_class<FNDomainWarp>();
 	ClassDB::register_class<FNDomainWarpGradient>();
+
+	// Modifiers
+	ClassDB::register_class<FNDomainScale>();
+	ClassDB::register_class<FNDomainOffset>();
 
 	// Blends
 	ClassDB::register_class<FNOpSourceLHS>();

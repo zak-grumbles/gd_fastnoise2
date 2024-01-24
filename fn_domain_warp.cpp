@@ -1,11 +1,5 @@
 #include "fn_domain_warp.h"
 
-/*
-FNDomainWarp::FNDomainWarp() {
-    //_node = _FastNoise::New<_FastNoise::DomainWarp>();
-}
-*/
-
 void FNDomainWarp::_bind_methods() {
     ClassDB::bind_method(
         D_METHOD("set_source", "gen"),
