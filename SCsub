@@ -18,5 +18,9 @@ env_gdfastnoise2.add_source_files(gdfastnoise2_obj, "*.cpp")
 
 env.modules_sources += gdfastnoise2_obj
 
-env.Append(LIBS=[File(fastnoise2_lib_dir + 'FastNoise.lib')])
+if env.msvc:
+    env.Append(LIBS=[File(fastnoise2_lib_dir + 'FastNoise.lib')])
+else:
+    env.Append(LIBS=[File(fastnoise2_lib_dir + 'libFastNoise.a')])
+
 env.Append(LIBPATH=[fastnoise2_lib_dir])
