@@ -145,18 +145,6 @@ void FNGenerator::_bind_generator_type_enum() {
     );
     ClassDB::bind_integer_constant(
         "FNGenerator", "GeneratorType",
-        "CellularValue", static_cast<int64_t>(GeneratorType::CellularValue)
-    );
-    ClassDB::bind_integer_constant(
-        "FNGenerator", "GeneratorType",
-        "CellularDistance", static_cast<int64_t>(GeneratorType::CellularDistance)
-    );
-    ClassDB::bind_integer_constant(
-        "FNGenerator", "GeneratorType",
-        "CellularLookup", static_cast<int64_t>(GeneratorType::CellularLookup)
-    );
-    ClassDB::bind_integer_constant(
-        "FNGenerator", "GeneratorType",
         "Value", static_cast<int64_t>(GeneratorType::Value)
     );
 }
@@ -173,15 +161,6 @@ void FNGenerator::_init_node() {
             break;
         case Perlin:
             _node = _FastNoise::New<_FastNoise::Perlin>();
-            break;
-        case CellularValue:
-            _node = _FastNoise::New<_FastNoise::CellularValue>();
-            break;
-        case CellularDistance:
-            _node = _FastNoise::New<_FastNoise::CellularDistance>();
-            break;
-        case CellularLookup:
-            _node = _FastNoise::New<_FastNoise::CellularLookup>();
             break;
         case Value:
             _node = _FastNoise::New<_FastNoise::Value>();

@@ -17,9 +17,6 @@ public:
     enum GeneratorType {
         Simplex = 0,
         Perlin,
-        CellularValue,
-        CellularDistance,
-        CellularLookup,
         Value
     };
 
@@ -69,6 +66,27 @@ protected:
 
 private:
     _FastNoise::SmartNode<_FastNoise::Generator> _node;
+};
+
+class FNSimplexGenerator : public FNGenerator {
+    GDCLASS(FNSimplexGenerator, FNGenerator)
+
+public:
+    FNSimplexGenerator() : FNGenerator(FNGenerator::GeneratorType::Simplex) {}
+};
+
+class FNPerlinGenerator : public FNGenerator {
+    GDCLASS(FNPerlinGenerator, FNGenerator)
+
+public:
+    FNPerlinGenerator() : FNGenerator(FNGenerator::GeneratorType::Perlin) {}
+};
+
+class FNValueGenerator : public FNGenerator {
+    GDCLASS(FNValueGenerator, FNGenerator)
+
+public:
+    FNValueGenerator() : FNGenerator(FNGenerator::GeneratorType::Value) {}
 };
 
 #endif
