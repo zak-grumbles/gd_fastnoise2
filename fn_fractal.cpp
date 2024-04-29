@@ -1,7 +1,7 @@
 #include "fn_fractal.h"
 
-FNFractal::FNFractal(FractalType type) {
-    _frac_type = type;
+FNFractal::FNFractal(int type) {
+    _frac_type = static_cast<FractalType>(type);
 
     switch(_frac_type) {
         case FractalType::FBm:
@@ -11,9 +11,9 @@ FNFractal::FNFractal(FractalType type) {
     }
 }
 
-FNFractal *FNFractal::new_fractal(int type) {
-    FractalType frac_type = static_cast<FractalType>(type);
-    return new FNFractal(frac_type);
+Ref<FNFractal> FNFractal::new_fractal(int type) {
+    Ref<FNFractal> fractal(new FNFractal(type));
+    return fractal;
 }
 
 void FNFractal::set_source(FNGenerator *src) {

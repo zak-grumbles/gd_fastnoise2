@@ -15,9 +15,9 @@ public:
 		PingPong
 	};
 
-	FNFractal(FractalType type);
+	FNFractal(int type);
 
-	static FNFractal* new_fractal(int type);
+	static Ref<FNFractal> new_fractal(int type);
 
 	void set_source(FNGenerator* src);
 	void set_gain(float value) const { _frac_node->SetGain(value); }
@@ -26,7 +26,7 @@ public:
 	void set_lacunarity(float value) const { _frac_node->SetLacunarity(value); }
 
 	_FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const override {
-		 return _frac_node; 
+		 return _frac_node;
 	}
 
 protected:

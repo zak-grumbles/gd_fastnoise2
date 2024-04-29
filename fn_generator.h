@@ -25,7 +25,7 @@ public:
 
     FNGenerator(int type);
 
-    static FNGenerator* new_generator(int type);
+    static Ref<FNGenerator> new_generator(int type);
 
     PackedFloat32Array gen_uniform_grid_2D(
         int x_start, int y_start,

@@ -5,8 +5,8 @@ FNGenerator::FNGenerator(int type) {
     _init_node();
 }
 
-FNGenerator *FNGenerator::new_generator(int type) {
-    return new FNGenerator(type);
+Ref<FNGenerator> FNGenerator::new_generator(int type) {
+    return Ref<FNGenerator>(new FNGenerator(type));
 }
 
 PackedFloat32Array FNGenerator::gen_uniform_grid_2D(
