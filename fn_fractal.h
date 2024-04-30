@@ -41,4 +41,25 @@ private:
 	_FastNoise::SmartNode<_FastNoise::Fractal<>> _frac_node;
 };
 
+class FNFBmFractal : public FNFractal {
+	GDCLASS(FNFBmFractal, FNFractal)
+
+public:
+	FNFBmFractal() : FNFractal(FractalType::FBm) {}
+};
+
+class FNRidgedFractal : public FNFractal {
+	GDCLASS(FNRidgedFractal, FNFractal)
+
+public:
+	FNRidgedFractal() : FNFractal(FractalType::Ridged) {}
+};
+
+class FNPingPongFractal : public FNFractal {
+	GDCLASS(FNPingPongFractal, FNFractal)
+
+public:
+	FNPingPongFractal() : FNFractal(FractalType::PingPong) {}
+};
+
 #endif

@@ -53,7 +53,6 @@ public:
     }
 
     int get_type() const;
-    void set_type(int type);
 
 protected:
     FNGenerator() = default;
@@ -61,6 +60,8 @@ protected:
     static void _bind_generator_type_enum();
 
     void _init_node();
+
+    void _set_type(int type);
 
     GeneratorType _gen_type;
 
@@ -72,21 +73,21 @@ class FNSimplexGenerator : public FNGenerator {
     GDCLASS(FNSimplexGenerator, FNGenerator)
 
 public:
-    FNSimplexGenerator() : FNGenerator(FNGenerator::GeneratorType::Simplex) {}
+    FNSimplexGenerator() : FNGenerator(GeneratorType::Simplex) {}
 };
 
 class FNPerlinGenerator : public FNGenerator {
     GDCLASS(FNPerlinGenerator, FNGenerator)
 
 public:
-    FNPerlinGenerator() : FNGenerator(FNGenerator::GeneratorType::Perlin) {}
+    FNPerlinGenerator() : FNGenerator(GeneratorType::Perlin) {}
 };
 
 class FNValueGenerator : public FNGenerator {
     GDCLASS(FNValueGenerator, FNGenerator)
 
 public:
-    FNValueGenerator() : FNGenerator(FNGenerator::GeneratorType::Value) {}
+    FNValueGenerator() : FNGenerator(GeneratorType::Value) {}
 };
 
 #endif

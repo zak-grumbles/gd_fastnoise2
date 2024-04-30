@@ -1,8 +1,7 @@
 #include "fn_generator.h"
 
 FNGenerator::FNGenerator(int type) {
-    _gen_type = static_cast<FNGenerator::GeneratorType>(type);
-    _init_node();
+    _set_type(type);
 }
 
 FNGenerator *FNGenerator::new_generator(int type) {
@@ -100,7 +99,7 @@ int FNGenerator::get_type() const {
     return static_cast<int>(_gen_type);
 }
 
-void FNGenerator::set_type(int type) {
+void FNGenerator::_set_type(int type) {
     _gen_type = static_cast<FNGenerator::GeneratorType>(type);
     _init_node();
 }
@@ -127,10 +126,6 @@ void FNGenerator::_bind_methods() {
     ClassDB::bind_method(
         D_METHOD("get_type"),
         &FNGenerator::get_type
-    );
-    ClassDB::bind_method(
-        D_METHOD("set_type", "type"),
-        &FNGenerator::set_type
     );
 }
 

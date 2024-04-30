@@ -41,6 +41,11 @@ This is a minimal GDScript example using a simplex source and an FBm fractal to 
 var gen : FNGenerator = FNGenerator.new_generator(FNGenerator.GeneratorType.Simplex);
 var frac : FNFractal = FNFractal.new_fractal(FNFractal.FractalType.FBm);
 
+# As of v0.2, you can alternatively do
+
+var perlin : FNPerlinGenerator = FNPerlinGenerator.new()
+var fbm : FNFBmFractal = FNFBmFractal.new()
+
 frac.set_source(gen);
 
 var data : PackedFloat32Array = frac.gen_uniform_grid_2D(
