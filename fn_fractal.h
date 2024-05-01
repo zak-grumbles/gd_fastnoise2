@@ -25,7 +25,7 @@ public:
 	void set_octave_count(int value) const { _frac_node->SetOctaveCount(value); }
 	void set_lacunarity(float value) const { _frac_node->SetLacunarity(value); }
 
-	_FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const override {
+	virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const override {
 		 return _frac_node; 
 	}
 

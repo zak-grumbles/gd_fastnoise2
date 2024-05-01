@@ -20,7 +20,12 @@ void initialize_gd_fastnoise2_module(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<FNSimplexGenerator>();
 	ClassDB::register_class<FNPerlinGenerator>();
 	ClassDB::register_class<FNValueGenerator>();
+
 	ClassDB::register_class<FNFractal>();
+	ClassDB::register_class<FNFBmFractal>();
+	ClassDB::register_class<FNRidgedFractal>();
+	ClassDB::register_class<FNPingPongFractal>();
+
 	ClassDB::register_class<FNCellular>();
 	ClassDB::register_class<FNCellularValue>();
 	ClassDB::register_class<FNCellularDistance>();
