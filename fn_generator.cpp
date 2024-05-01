@@ -97,12 +97,25 @@ int FNGenerator::get_type() const {
     return static_cast<int>(_gen_type);
 }
 
-String FNGenerator::encode_generator_tree() const {
+String FNGenerator::serialize_tree() const {
     std::unique_ptr<_FastNoise::NodeData> data = std::make_unique<_FastNoise::NodeData>(
         &(_get_smart_node()->GetMetadata())
     );
     std::string serialised = _FastNoise::Metadata::SerialiseNodeData(data.get(), true);
 	return String(serialised.c_str());
+}
+
+Ref<FNGenerator> FNGenerator::deserialize(String encoded) {
+    _FastNoise::SmartNode<> deserialized = _FastNoise::NewFromEncodedNodeTree(encoded.utf8().get_data());
+
+    FNGenerator* gen = new FNGenerator();
+    gen->_node = deserialized;
+    gen->_set_type(GeneratorType::Unknown);
+
+    Ref<FNGenerator> result(gen);
+    gen = nullptr;
+
+	return result;
 }
 
 void FNGenerator::_set_type(int type) {
@@ -130,8 +143,12 @@ void FNGenerator::_bind_methods() {
     );
 
     ClassDB::bind_method(
-        D_METHOD("encode_generator_tree"),
-        &FNGenerator::encode_generator_tree
+        D_METHOD("serialize_tree"),
+        &FNGenerator::serialize_tree
+    );
+    ClassDB::bind_method(
+        D_METHOD("deserialize", "encoded"),
+        &FNGenerator::deserialize
     );
 }
 
@@ -147,6 +164,10 @@ void FNGenerator::_bind_generator_type_enum() {
     ClassDB::bind_integer_constant(
         "FNGenerator", "GeneratorType",
         "Value", static_cast<int64_t>(GeneratorType::Value)
+    );
+    ClassDB::bind_integer_constant(
+        "FNGenerator", "GeneratorType",
+        "Unknown", static_cast<int64_t>(GeneratorType::Unknown)
     );
 }
 

@@ -17,7 +17,8 @@ public:
     enum GeneratorType {
         Simplex = 0,
         Perlin,
-        Value
+        Value,
+        Unknown
     };
 
     FNGenerator(int type);
@@ -48,7 +49,9 @@ public:
 
     int get_type() const;
 
-    virtual String encode_generator_tree() const;
+    virtual String serialize_tree() const;
+    static Ref<FNGenerator> deserialize(String encoded);
+
     virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
 
 protected:
