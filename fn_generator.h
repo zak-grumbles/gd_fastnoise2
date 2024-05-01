@@ -49,7 +49,7 @@ public:
     int get_type() const;
 
     virtual String encode_generator_tree() const;
-    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return nullptr; }
+    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
 
 protected:
     FNGenerator() = default;
@@ -60,6 +60,7 @@ protected:
     void _set_type(int type);
 
     GeneratorType _gen_type;
+    _FastNoise::SmartNode<_FastNoise::Generator> _node;
 };
 
 class FNSimplexGenerator : public FNGenerator {
@@ -67,11 +68,6 @@ class FNSimplexGenerator : public FNGenerator {
 
 public:
     FNSimplexGenerator();
-
-protected:
-    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
-
-    _FastNoise::SmartNode<_FastNoise::Simplex> _node;
 };
 
 class FNPerlinGenerator : public FNGenerator {
@@ -79,11 +75,6 @@ class FNPerlinGenerator : public FNGenerator {
 
 public:
     FNPerlinGenerator();
-
-protected:
-    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
-
-    _FastNoise::SmartNode<_FastNoise::Perlin> _node;
 };
 
 class FNValueGenerator : public FNGenerator {
@@ -91,11 +82,6 @@ class FNValueGenerator : public FNGenerator {
 
 public:
     FNValueGenerator();
-
-protected:
-    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
-
-    _FastNoise::SmartNode<_FastNoise::Value> _node;
 };
 
 #endif
