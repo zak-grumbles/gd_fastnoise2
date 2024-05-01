@@ -1,11 +1,9 @@
 #include "fn_generator.h"
 
+#include <FastNoise/Metadata.h>
+
 FNGenerator::FNGenerator(int type) {
     _set_type(type);
-}
-
-FNGenerator *FNGenerator::new_generator(int type) {
-    return new FNGenerator(type);
 }
 
 PackedFloat32Array FNGenerator::gen_uniform_grid_2D(
@@ -15,7 +13,7 @@ PackedFloat32Array FNGenerator::gen_uniform_grid_2D(
     PackedFloat32Array output;
     output.resize_zeroed(width * height);
 
-    _node->GenUniformGrid2D(output.ptrw(),
+    _get_smart_node()->GenUniformGrid2D(output.ptrw(),
         x_start, y_start,
         width, height,
         frequency, seed);
@@ -55,7 +53,7 @@ Ref<ArrayMesh> FNGenerator::gen_mesh_2D(int x_start, int y_start, int width, int
     PackedFloat32Array noise;
     noise.resize_zeroed(width * height);
 
-    _node->GenUniformGrid2D(noise.ptrw(),
+    _get_smart_node()->GenUniformGrid2D(noise.ptrw(),
         x_start, y_start,
         width, height,
         frequency, seed
@@ -87,7 +85,7 @@ PackedFloat32Array FNGenerator::gen_uniform_grid_3D(
     PackedFloat32Array noise_output;
     noise_output.resize_zeroed(width * height * depth);
 
-    _node->GenUniformGrid3D(noise_output.ptrw(),
+    _get_smart_node()->GenUniformGrid3D(noise_output.ptrw(),
         x_start, y_start, z_start,
         width, height, depth,
         frequency, seed);
@@ -99,17 +97,20 @@ int FNGenerator::get_type() const {
     return static_cast<int>(_gen_type);
 }
 
+String FNGenerator::encode_generator_tree() const {
+    std::unique_ptr<_FastNoise::NodeData> data = std::make_unique<_FastNoise::NodeData>(
+        &(_get_smart_node()->GetMetadata())
+    );
+    std::string serialised = _FastNoise::Metadata::SerialiseNodeData(data.get(), true);
+	return String(serialised.c_str());
+}
+
 void FNGenerator::_set_type(int type) {
     _gen_type = static_cast<FNGenerator::GeneratorType>(type);
-    _init_node();
 }
 
 void FNGenerator::_bind_methods() {
     _bind_generator_type_enum();
-
-    ClassDB::bind_static_method("FNGenerator", 
-        D_METHOD("new_generator", "gen_type"),
-        &FNGenerator::new_generator);
 
     ClassDB::bind_method(D_METHOD("gen_uniform_grid_2D",
         "x_start", "y_start", "width", "height",
@@ -126,6 +127,11 @@ void FNGenerator::_bind_methods() {
     ClassDB::bind_method(
         D_METHOD("get_type"),
         &FNGenerator::get_type
+    );
+
+    ClassDB::bind_method(
+        D_METHOD("encode_generator_tree"),
+        &FNGenerator::encode_generator_tree
     );
 }
 
@@ -144,21 +150,14 @@ void FNGenerator::_bind_generator_type_enum() {
     );
 }
 
-void FNGenerator::_init_node() {
-    if(_node) {
-        _node.reset();
-    }
+FNSimplexGenerator::FNSimplexGenerator() : FNGenerator(GeneratorType::Simplex) {
+    _node = _FastNoise::New<_FastNoise::Simplex>();
+}
 
-    switch(_gen_type) {
-        case Simplex:
-        default:
-            _node = _FastNoise::New<_FastNoise::Simplex>();
-            break;
-        case Perlin:
-            _node = _FastNoise::New<_FastNoise::Perlin>();
-            break;
-        case Value:
-            _node = _FastNoise::New<_FastNoise::Value>();
-            break;
-    }
+FNPerlinGenerator::FNPerlinGenerator() : FNGenerator(GeneratorType::Perlin) {
+    _node = _FastNoise::New<_FastNoise::Perlin>();
+}
+
+FNValueGenerator::FNValueGenerator() : FNGenerator(GeneratorType::Value) {
+    _node = _FastNoise::New<_FastNoise::Value>();
 }

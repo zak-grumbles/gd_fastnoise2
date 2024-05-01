@@ -22,8 +22,6 @@ public:
 
     FNGenerator(int type);
 
-    static FNGenerator* new_generator(int type);
-
     PackedFloat32Array gen_uniform_grid_2D(
         int x_start, int y_start,
         int width, int height,
@@ -48,46 +46,56 @@ public:
         float frequency = 0.2f, int seed = 1337
     ) const;
 
-    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const {
-         return _node; 
-    }
-
     int get_type() const;
+
+    virtual String encode_generator_tree() const;
+    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return nullptr; }
 
 protected:
     FNGenerator() = default;
     static void _bind_methods();
     static void _bind_generator_type_enum();
 
-    void _init_node();
 
     void _set_type(int type);
 
     GeneratorType _gen_type;
-
-private:
-    _FastNoise::SmartNode<_FastNoise::Generator> _node;
 };
 
 class FNSimplexGenerator : public FNGenerator {
     GDCLASS(FNSimplexGenerator, FNGenerator)
 
 public:
-    FNSimplexGenerator() : FNGenerator(GeneratorType::Simplex) {}
+    FNSimplexGenerator();
+
+protected:
+    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
+
+    _FastNoise::SmartNode<_FastNoise::Simplex> _node;
 };
 
 class FNPerlinGenerator : public FNGenerator {
     GDCLASS(FNPerlinGenerator, FNGenerator)
 
 public:
-    FNPerlinGenerator() : FNGenerator(GeneratorType::Perlin) {}
+    FNPerlinGenerator();
+
+protected:
+    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
+
+    _FastNoise::SmartNode<_FastNoise::Perlin> _node;
 };
 
 class FNValueGenerator : public FNGenerator {
     GDCLASS(FNValueGenerator, FNGenerator)
 
 public:
-    FNValueGenerator() : FNGenerator(GeneratorType::Value) {}
+    FNValueGenerator();
+
+protected:
+    virtual _FastNoise::SmartNode<_FastNoise::Generator> _get_smart_node() const { return _node; }
+
+    _FastNoise::SmartNode<_FastNoise::Value> _node;
 };
 
 #endif
